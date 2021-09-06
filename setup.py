@@ -1,7 +1,6 @@
 from setuptools import setup
-from io import open
 
-version = "0.1.2"
+version = "0.1.2.3"
 
 long_description = "Python module for edu-tpi.donstu"
 
@@ -10,7 +9,7 @@ setup(
 	version=version,
 
 	author="Feb",
-	author_email="kmoloz@mail.ru",
+	author_email="drons_dron@mail.ru",
 
 	description = long_description,
 	long_description=long_description,

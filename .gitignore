@@ -1,3 +1,5 @@
 file_for_bot.py
 jwt_upd.py
-*/__pycache__/*
+*__pycache__*
+/tpilib.egg-info/
+/dist/
