@@ -6,8 +6,11 @@ class SettingsClass:
 			"tgn":"https://edu-tpi.donstu.ru/api/",
 			"rnd":"https://edu.donstu.ru/api/"
 		}
-		self.url_api = self.apiSelection[apiTag]  
+
+		self.url_api = self.apiSelection[apiTag]
+		self.params = {}
 		self.headers = {
+			"cookie":f'authToken={token}',
 			"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 YaBrowser/21.3.3.234 Yowser/2.5 Safari/537.36",
 			"Content-Type": "application/json; charset=utf-8"
 		}
@@ -78,9 +81,6 @@ class User(SettingsClass):
 	def listStudentsDebts(self, studentID):
 		return requests.get(f"{self.url_api}StudentsDebts/list?studentID={studentID}", headers=self.headers).json()
 
-	def journalList(self):
-		return requests.get(f"{self.url_api}Journals/JournalList", headers=self.headers).json()
-
 	def createChat(self, nameChat):
 		data = {
 			"channel": False,
@@ -93,12 +93,14 @@ class User(SettingsClass):
 		return res.text
 
 	def listWorks(self, typeVeref):
-		# https://edu-tpi.donstu.ru/api/Portfolio/Verifier/ListWorks?year={year}&sem=-1&finished={veref}&type={typeVeref}
 		return requests.get(f"{self.url_api}Portfolio/Verifier/ListWorks?finished=false&type={typeVeref}", headers=self.headers).json()
 
 	def filesList(self, workID):
 		return requests.get(f"{self.url_api}Portfolio/FilesList?workID={workID}", headers=self.headers).json()
-	# https://edu-tpi.donstu.ru/api/Portfolio/FilesList?workID=9020
+
+	# Отправка письма на почту
+	def TestSend(self, params):
+		return requests.get(f"{self.url_api}Mail/TestSend", headers=self.headers, params=params).json()
 
 class Rasp(SettingsClass):
 
@@ -119,6 +121,26 @@ class Rasp(SettingsClass):
 
 	def TeachersRasp(self):
 		return requests.get(f"{self.url_api}raspTeacherlist", headers=self.headers).json()
+
+class Journals(SettingsClass):
+
+	def List(self, params = None):
+		return requests.get(f"{self.url_api}Journals/JournalList", headers=self.headers, params=params).json()
+
+	def AnotherTypes(self, journalID):
+		return requests.get(f"{self.url_api}Journals/AnotherTypes?journalID={journalID}", headers=self.headers).json()
+
+	def Journal(self, journalID):
+		return requests.get(f"{self.url_api}Journals/Journal?journalID={journalID}", headers=self.headers).json()
+
+	def JournalDate(self, journalID):
+		return requests.get(f"{self.url_api}Journals/JournalDate?journalID={int(journalID)}", headers=self.headers).json()
+
+	def PostJournalDate(self, data):
+		return requests.post(f"{self.url_api}Journals/JournalDate", headers=self.headers, data=json.dumps(data)).json()
+
+	def JournalSave(self, data):
+		return requests.post(f"{self.url_api}Journals/JournalSave", headers=self.headers, data=json.dumps(data)).json()
 
 # https://edu-tpi.donstu.ru/api/UserInfo/user?userID=1172
 class Account:

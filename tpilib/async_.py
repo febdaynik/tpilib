@@ -9,6 +9,7 @@ class SettingsClass:
 			"rnd":"https://edu.donstu.ru/api/"
 		}
 		self.url_api = self.apiSelection[apiTag]  
+		self.params = {} 
 		self.headers = {
 			"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 YaBrowser/21.3.3.234 Yowser/2.5 Safari/537.36",
 			"Content-Type": "application/json; charset=utf-8"
@@ -102,7 +103,7 @@ class User(SettingsClass):
 		return await self.session.get(f"{self.url_api}StudentsDebts/list?studentID={studentID}", headers=self.headers)
 
 	async def journalList(self):
-		return await self.session.get(f"{self.url_api}Journals/JournalList", headers=self.headers)
+		return await self.session.get(f"{self.url_api}Journals/JournalList", headers=self.headers, params = self.params)
 
 	# TODO: доделать
 	async def createChat(self, nameChat):

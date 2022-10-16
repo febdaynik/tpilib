@@ -1,6 +1,6 @@
 # pip library by feb
 
-from .sync_ import (User, Account)
+from .sync_ import (User, Account, Journals)
 from .async_ import (User)
 
 # ----------------------
