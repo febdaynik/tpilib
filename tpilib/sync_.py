@@ -10,7 +10,6 @@ class SettingsClass:
 		self.url_api = self.apiSelection[apiTag]
 		self.params = {}
 		self.headers = {
-			"cookie":f'authToken={token}',
 			"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 YaBrowser/21.3.3.234 Yowser/2.5 Safari/537.36",
 			"Content-Type": "application/json; charset=utf-8"
 		}
@@ -49,7 +48,6 @@ class User(SettingsClass):
 		elif statusID == 2:
 			pass
 
-		print(usertoID)
 		data = {
 			"markdownMessage": text_message,
 			"htmlMessage": "",
@@ -61,6 +59,7 @@ class User(SettingsClass):
 		req = requests.post(f"{self.url_api}Mail/InboxMail", data=json.dumps(data), headers=self.headers)
 
 	def infoAccount(self):
+		# return self.session.get(f"{self.url_api}tokenauth", headers=self.headers)
 		return requests.get(f"{self.url_api}tokenauth", headers=self.headers).json()
 
 	def infoUser(self, userID):
@@ -68,6 +67,9 @@ class User(SettingsClass):
 
 	def infoStudent(self, studentID):
 		return requests.get(f"{self.url_api}UserInfo/Student?studentID={studentID}", headers=self.headers).json()
+
+	def infoGroup(self, groupID):
+		return requests.get(f"{self.url_api}UserInfo/GroupInfo?groupID={groupID}", headers=self.headers).json()
 
 	def feed(self, userID):
 		return requests.get(f"{self.url_api}Feed?userID={userID}&startDate=null", headers=self.headers).json()
@@ -142,7 +144,6 @@ class Journals(SettingsClass):
 	def JournalSave(self, data):
 		return requests.post(f"{self.url_api}Journals/JournalSave", headers=self.headers, data=json.dumps(data)).json()
 
-# https://edu-tpi.donstu.ru/api/UserInfo/user?userID=1172
 class Account:
 
 	def __init__(self, email, password = None):

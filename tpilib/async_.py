@@ -123,6 +123,9 @@ class User(SettingsClass):
 	async def filesList(self, workID):
 		return await self.session.get(f"{self.url_api}Portfolio/FilesList?workID={workID}", headers=self.headers)
 		
+	def TestSend(self, params):
+		return await self.session.get(f"{self.url_api}Mail/TestSend", headers=self.headers, params=params)
+
 class Rasp(SettingsClass):
 
 	def __str__(self):
@@ -146,3 +149,22 @@ class Rasp(SettingsClass):
 	async def TeachersRasp(self):
 		return await self.session.get(f"{self.url_api}raspTeacherlist", headers=self.headers)
 
+class Journals(SettingsClass):
+
+	async def List(self, params = None):
+		return await self.session.get(f"{self.url_api}Journals/JournalList", headers=self.headers, params=params)
+
+	async def AnotherTypes(self, journalID):
+		return await self.session.get(f"{self.url_api}Journals/AnotherTypes?journalID={journalID}", headers=self.headers)
+
+	async def Journal(self, journalID):
+		return await self.session.get(f"{self.url_api}Journals/Journal?journalID={journalID}", headers=self.headers)
+
+	async def JournalDate(self, journalID):
+		return await self.session.get(f"{self.url_api}Journals/JournalDate?journalID={int(journalID)}", headers=self.headers)
+
+	async def PostJournalDate(self, data):
+		return await self.session.post(f"{self.url_api}Journals/JournalDate", headers=self.headers, data=json.dumps(data))
+
+	async def JournalSave(self, data):
+		return await self.session.get(f"{self.url_api}Journals/JournalSave", headers=self.headers, data=json.dumps(data))
