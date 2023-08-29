@@ -1,6 +1,6 @@
 from setuptools import setup
 
-version = "0.1.2.4"
+version = "0.1.2.5_8"
 
 long_description = "Python module for edu-tpi.donstu"
 

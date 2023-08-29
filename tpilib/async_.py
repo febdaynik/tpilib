@@ -123,7 +123,7 @@ class User(SettingsClass):
 	async def filesList(self, workID):
 		return await self.session.get(f"{self.url_api}Portfolio/FilesList?workID={workID}", headers=self.headers)
 		
-	def TestSend(self, params):
+	async def TestSend(self, params):
 		return await self.session.get(f"{self.url_api}Mail/TestSend", headers=self.headers, params=params)
 
 class Rasp(SettingsClass):
